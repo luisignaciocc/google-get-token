@@ -1,23 +1,34 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export function GoogleOauthSetup() {
-  const [clientId, setClientId] = useState('')
-  const [clientSecret, setClientSecret] = useState('')
-  const [redirectUri, setRedirectUri] = useState('')
+  const [clientId, setClientId] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
+  const [redirectUri, setRedirectUri] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // Here you would typically send these credentials to your backend
-    console.log('Submitted:', { clientId, clientSecret, redirectUri })
+    console.log("Submitted:", { clientId, clientSecret, redirectUri });
     // In a real app, NEVER log sensitive information like this
-  }
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -30,30 +41,30 @@ export function GoogleOauthSetup() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label htmlFor="clientId">Client ID</Label>
-              <Input 
-                id="clientId" 
-                value={clientId} 
-                onChange={(e) => setClientId(e.target.value)} 
-                required 
+              <Input
+                id="clientId"
+                value={clientId}
+                onChange={(e) => setClientId(e.target.value)}
+                required
               />
             </div>
             <div>
               <Label htmlFor="clientSecret">Client Secret</Label>
-              <Input 
-                id="clientSecret" 
-                type="password" 
-                value={clientSecret} 
-                onChange={(e) => setClientSecret(e.target.value)} 
-                required 
+              <Input
+                id="clientSecret"
+                type="password"
+                value={clientSecret}
+                onChange={(e) => setClientSecret(e.target.value)}
+                required
               />
             </div>
             <div>
               <Label htmlFor="redirectUri">Redirect URI</Label>
-              <Input 
-                id="redirectUri" 
-                value={redirectUri} 
-                onChange={(e) => setRedirectUri(e.target.value)} 
-                required 
+              <Input
+                id="redirectUri"
+                value={redirectUri}
+                onChange={(e) => setRedirectUri(e.target.value)}
+                required
               />
             </div>
             <Button type="submit">Save Credentials</Button>
@@ -66,15 +77,36 @@ export function GoogleOauthSetup() {
           <AccordionTrigger>How to Set Up Google OAuth</AccordionTrigger>
           <AccordionContent>
             <ol className="list-decimal list-inside space-y-2">
-              <li>Go to the Google Cloud Console (https://console.cloud.google.com/).</li>
+              <li>
+                Go to the Google Cloud Console
+                (https://console.cloud.google.com/).
+              </li>
               <li>Create a new project or select an existing one.</li>
-              <li>Navigate to "APIs & Services" > "Credentials".</li>
-              <li>Click "Create Credentials" and select "OAuth client ID".</li>
-              <li>Choose "Web application" as the application type.</li>
-              <li>Set up your authorized JavaScript origins and redirect URIs.</li>
-              <li>Click "Create" to generate your Client ID and Client Secret.</li>
-              <li>Copy these credentials and paste them into the form above.</li>
-              <li>Don't forget to enable the necessary APIs for your project.</li>
+              <li>
+                Navigate to &quot;APIs & Services&quot; &gt;
+                &quot;Credentials&quot;.
+              </li>
+              <li>
+                Click &quot;Create Credentials&quot; and select &quot;OAuth
+                client ID&quot;.
+              </li>
+              <li>
+                Choose &quot;Web application&quot; as the application type.
+              </li>
+              <li>
+                Set up your authorized JavaScript origins and redirect URIs.
+              </li>
+              <li>
+                Click &quot;Create&quot; to generate your Client ID and Client
+                Secret.
+              </li>
+              <li>
+                Copy these credentials and paste them into the form above.
+              </li>
+              <li>
+                Don`&apos;t forget to enable the necessary APIs for your
+                project.
+              </li>
             </ol>
           </AccordionContent>
         </AccordionItem>
@@ -92,5 +124,5 @@ export function GoogleOauthSetup() {
         </AccordionItem>
       </Accordion>
     </div>
-  )
+  );
 }
