@@ -26,21 +26,36 @@ export function GoogleOauthSetup() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send these credentials to your backend
+
     const scopeList = scopes
       .split(",")
       .map((scope) => scope.trim())
       .filter(Boolean);
-    console.log("Submitted:", { clientId, clientSecret, scopeList });
-    // In a real app, NEVER log sensitive information like this
+
+    localStorage.setItem("client_id", clientId);
+    localStorage.setItem("client_secret", clientSecret);
+
+    const queryParams = new URLSearchParams({
+      client_id: clientId,
+      redirect_uri: window.location.origin + "/callback",
+      response_type: "code",
+      scope: scopeList.join(" "),
+      access_type: "offline",
+      prompt: "consent",
+    });
+
+    window.location.href = `https://accounts.google.com/o/oauth2/auth?${queryParams.toString()}`;
   };
 
   return (
     <div className="container mx-auto p-4">
       <Card className="mb-8">
         <CardHeader>
-          <CardTitle>Google OAuth Setup</CardTitle>
-          <CardDescription>Enter your Google OAuth credentials</CardDescription>
+          <CardTitle>Enter your Google OAuth credentials</CardTitle>
+          <CardDescription>
+            You should configure {window.location.origin + "/callback"} in the
+            redirect URI of your Google Cloud Console project.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -73,7 +88,7 @@ export function GoogleOauthSetup() {
                 className="h-24"
               />
             </div>
-            <Button type="submit">Save Credentials</Button>
+            <Button type="submit">Get Tokens</Button>
           </form>
         </CardContent>
       </Card>
