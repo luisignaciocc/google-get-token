@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
   Card,
@@ -21,12 +22,16 @@ import {
 export function GoogleOauthSetup() {
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
-  const [redirectUri, setRedirectUri] = useState("");
+  const [scopes, setScopes] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Here you would typically send these credentials to your backend
-    console.log("Submitted:", { clientId, clientSecret, redirectUri });
+    const scopeList = scopes
+      .split(",")
+      .map((scope) => scope.trim())
+      .filter(Boolean);
+    console.log("Submitted:", { clientId, clientSecret, scopeList });
     // In a real app, NEVER log sensitive information like this
   };
 
@@ -59,12 +64,13 @@ export function GoogleOauthSetup() {
               />
             </div>
             <div>
-              <Label htmlFor="redirectUri">Redirect URI</Label>
-              <Input
-                id="redirectUri"
-                value={redirectUri}
-                onChange={(e) => setRedirectUri(e.target.value)}
-                required
+              <Label htmlFor="scopes">Scopes (comma-separated)</Label>
+              <Textarea
+                id="scopes"
+                value={scopes}
+                onChange={(e) => setScopes(e.target.value)}
+                placeholder="e.g., https://www.googleapis.com/auth/userinfo.email, https://www.googleapis.com/auth/userinfo.profile"
+                className="h-24"
               />
             </div>
             <Button type="submit">Save Credentials</Button>
