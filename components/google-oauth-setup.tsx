@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,6 +23,11 @@ export function GoogleOauthSetup() {
   const [clientId, setClientId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [scopes, setScopes] = useState("");
+  const [callbackUrl, setCallbackUrl] = useState("");
+
+  useEffect(() => {
+    setCallbackUrl(window.location.origin + "/callback");
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +42,7 @@ export function GoogleOauthSetup() {
 
     const queryParams = new URLSearchParams({
       client_id: clientId,
-      redirect_uri: window.location.origin + "/callback",
+      redirect_uri: callbackUrl,
       response_type: "code",
       scope: scopeList.join(" "),
       access_type: "offline",
@@ -53,8 +58,8 @@ export function GoogleOauthSetup() {
         <CardHeader>
           <CardTitle>Enter your Google OAuth credentials</CardTitle>
           <CardDescription>
-            You should configure {window.location.origin + "/callback"} in the
-            redirect URI of your Google Cloud Console project.
+            You should configure {callbackUrl} in the redirect URI of your
+            Google Cloud Console project.
           </CardDescription>
         </CardHeader>
         <CardContent>
